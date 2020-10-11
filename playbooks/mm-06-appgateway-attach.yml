@@ -1,0 +1,43 @@
+- name: Connect Mattermost Application Gateway to VMSS
+  hosts: localhost
+  no_log: false
+  vars_files:
+    - ./vars-myvars.yml
+  roles:
+    - ../modules
+
+  tasks:
+    - name: Update VMSS to use Application Gateway instead of Load Balancer
+      no_log: true
+      azure.azcollection.azure_rm_virtualmachinescaleset:
+        resource_group: "{{ resource_group }}"
+        name: "{{ vm_name }}-mattermost-vmss"
+        vm_size: Standard_DS1_v2
+        admin_username: "{{ admin_username }}"
+        ssh_password_enabled: false
+        ssh_public_keys:
+          - path: /home/{{ admin_username }}/.ssh/authorized_keys
+            key_data: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+        capacity: 4
+        virtual_network_name: "{{ vm_name }}-mattermost-vnet"
+        subnet_name: "{{ vm_name }}-mattermost-vmss-subnet"
+        upgrade_policy: Manual
+        tier: Standard
+        managed_disk_type: Standard_LRS
+        os_disk_caching: ReadWrite
+        security_group: "{{ vm_name }}-mattermost-nsg"
+        image:
+          name: "{{ vm_name }}-mattermost-disk-image"
+          resource_group: "{{ resource_group }}"
+        application_gateway: '{{ vm_name }}-mattermost-ag'
+
+    - name: Getting FQDN of the Application Gateway
+      azure.azcollection.azure_rm_publicipaddress_info:
+        resource_group: "{{ resource_group }}"
+        name: "{{ vm_name }}-mattermost-ag-pip-{{ rnum }}"
+      register: output
+
+    - name: Dump Application Gateway Public IP
+      debug:
+        msg: "Mattermost App Gateway FQDN: http://{{ output.publicipaddresses[0].dns_settings.fqdn }} "
+

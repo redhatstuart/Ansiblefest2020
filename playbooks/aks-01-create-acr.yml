@@ -1,0 +1,35 @@
+- name: Create Azure Container Registry 
+  hosts: localhost
+  connection: local
+  no_log: false
+  vars_files:
+    - ./vars-myvars.yml
+
+  tasks:
+
+    - name: Create an Azure Container Registry for AKS and Modernization Labs
+      azure.azcollection.azure_rm_containerregistry:
+        name: "{{ vm_name }}{{ rnum }}acr"
+        resource_group: "{{ resource_group }}"
+        admin_user_enabled: true
+        sku: Premium
+        tags:
+            Release: Initial
+            Environment: RedHatSummit
+
+    - name: "Query Azure Container Registry for credential information"
+      azure.azcollection.azure_rm_containerregistry_info:
+        name: "{{ vm_name }}{{ rnum }}acr"
+        resource_group: "{{ resource_group }}"
+        retrieve_credentials: "yes"
+      register: acr_output
+
+    - debug:
+        msg: "ACR Username: {{ acr_output.registries[0].name }}"
+
+    - debug:
+        msg: "ACR Password: {{ acr_output.registries[0].credentials.password }}"
+
+    - debug:
+        msg: "ACR Hostname: {{ acr_output.registries[0].login_server }}"
+
