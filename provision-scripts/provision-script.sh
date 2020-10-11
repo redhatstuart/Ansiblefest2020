@@ -94,12 +94,12 @@ echo "**************************************************************************
         cd /usr/local
         tar xvfz v1.1.0.tar.gz
         ln -s /usr/local/noVNC-1.1.0/vnc.html /usr/local/noVNC-1.1.0/index.html
-        wget --quiet -P /etc/systemd/system https://raw.githubusercontent.com/stuartatmicrosoft/RedHatSummit2020/master/provision-scripts/websockify.service
-	wget --quiet --no-check-certificate -P /etc/systemd/system "https://raw.githubusercontent.com/stuartatmicrosoft/RedHatSummit2020/master/provision-scripts/vncserver@:4.service"
-	openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/pki/tls/certs/novnc.pem -out /etc/pki/tls/certs/novnc.pem -days 365 -subj "/C=US/ST=Michigan/L=Ann Arbor/O=RedHatSummit/OU=CloudNativeAzure/CN=microsoft.com"
+        wget --quiet -P /etc/systemd/system https://raw.githubusercontent.com/stuartatmicrosoft/Ansiblefest2020/master/provision-scripts/websockify.service
+	wget --quiet --no-check-certificate -P /etc/systemd/system "https://raw.githubusercontent.com/stuartatmicrosoft/Ansiblefest2020/master/provision-scripts/vncserver@:4.service"
+	openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/pki/tls/certs/novnc.pem -out /etc/pki/tls/certs/novnc.pem -days 365 -subj "/C=US/ST=Michigan/L=Ann Arbor/O=Ansiblefest/OU=CloudNativeAzure/CN=microsoft.com"
 	su -c "mkdir .vnc" - student
-	wget --quiet --no-check-certificate -P /home/student/.vnc https://raw.githubusercontent.com/stuartatmicrosoft/RedHatSummit2020/master/provision-scripts/passwd
-	wget --quiet --no-check-certificate -P /home/student/.vnc https://raw.githubusercontent.com/stuartatmicrosoft/RedHatSummit2020/master/provision-scripts/xstartup
+	wget --quiet --no-check-certificate -P /home/student/.vnc https://raw.githubusercontent.com/stuartatmicrosoft/Ansiblefest2020/master/provision-scripts/passwd
+	wget --quiet --no-check-certificate -P /home/student/.vnc https://raw.githubusercontent.com/stuartatmicrosoft/Ansiblefest2020/master/provision-scripts/xstartup
         chown student:student /home/student/.vnc/passwd
         chown student:student /home/student/.vnc/xstartup
         chmod 600 /home/student/.vnc/passwd
@@ -125,11 +125,11 @@ echo "**************************************************************************
         su -c "gconftool-2 -t bool -s /apps/rhsm-icon/hide_icon true" - student
 	su -c "ssh-keygen -t rsa -q -P '' -f /home/student/.ssh/id_rsa" - student
         mkdir -p /home/student/.local/share/keyrings
-	wget --quiet -P /home/student/.local/share/keyrings https://raw.githubusercontent.com/stuartatmicrosoft/RedHatSummit2020/master/provision-scripts/Default.keyring
+	wget --quiet -P /home/student/.local/share/keyrings https://raw.githubusercontent.com/stuartatmicrosoft/Ansiblefest2020/master/provision-scripts/Default.keyring
         chown student:student /home/student/.local/share/keyrings/Default.keyring
         restorecon /home/student/.local/share/keyrings/Default.keyring
 echo "********************************************************************************************"
-        wget -P /etc/yum.repos.d https://raw.githubusercontent.com/stuartatmicrosoft/RedHatSummit2020/master/provision-scripts/mongodb-org-4.2.repo 
+        wget -P /etc/yum.repos.d https://raw.githubusercontent.com/stuartatmicrosoft/Ansiblefest2020/master/provision-scripts/mongodb-org-4.2.repo 
         yum -y install mongodb-org 
         npm install pm2@latest -g
         systemctl enable mongod
@@ -151,7 +151,7 @@ echo "**************************************************************************
         chown -R student:student /home/student/.local
         chmod a+rx /home/student/.local
         cd /usr/local/bin
-        wget -P /usr/local/bin https://raw.githubusercontent.com/stuartatmicrosoft/RedHatSummit2020/master/provision-scripts/oc.tar.gz
+        wget -P /usr/local/bin https://raw.githubusercontent.com/stuartatmicrosoft/Ansiblefest2020/master/provision-scripts/oc.tar.gz
         tar xvfz oc.tar.gz
         rm -f oc.tar.gz
 echo "********************************************************************************************"
@@ -173,7 +173,7 @@ echo AZURE_CLIENT_ID=$SP_APP_ID >> /home/student/Desktop/credentials.txt
 echo AZURE_SECRET=$SP_SECRET >> /home/student/Desktop/credentials.txt
 echo AZURE_SUBSCRIPTION_ID=$AZ_SUBSCRIPTION_ID >> /home/student/Desktop/credentials.txt
 echo AZURE_TENANT_ID=$AZ_TENANT_ID >> /home/student/Desktop/credentials.txt
-echo GUIDE_URL=https://github.com/stuartatmicrosoft/RedHatSummit2020 >> /home/student/Desktop/credentials.txt
+echo GUIDE_URL=https://github.com/stuartatmicrosoft/Ansiblefest2020 >> /home/student/Desktop/credentials.txt
 chown student:student /home/student/Desktop/credentials.txt
 
 echo "`date` --END-- Provision Script" >>/root/provision-script-output.log
