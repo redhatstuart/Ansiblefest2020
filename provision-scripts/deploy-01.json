@@ -247,8 +247,8 @@
             }
         },
         {
-            "name": "config-app",
-            "type": "CustomScript",
+            "name": "[concat(parameters('virtualMachineName'),'/mycustomscriptextension')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
             "apiVersion": "2019-03-01",
             "location": "[resourceGroup().location]",
             "dependsOn": [
@@ -258,7 +258,7 @@
                "displayName": "config-app"
             },
             "properties": {
-                "publisher": "Microsoft.Compute.Extensions",
+                "publisher": "Microsoft.Azure.Extensions",
                 "type": "CustomScript",
                 "typeHandlerVersion": "2.1",
                 "autoUpgradeMinorVersion": true,
