@@ -246,27 +246,27 @@
                 ]
             }
         },
-        {
-            "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(parameters('virtualMachineName'),'/mycustomscriptextension')]",
-            "apiVersion": "2015-06-15",
-            "location": "[resourceGroup().location]",
-            "dependsOn": [
-                "[concat('Microsoft.Compute/virtualMachines/',parameters('virtualMachineName'))]"
-            ],
-            "properties": {
-                "publisher": "Microsoft.Azure.Extensions",
-                "type": "CustomScript",
-                "typeHandlerVersion": "2.0",
-                "autoUpgradeMinorVersion": true,
-                "settings": {
-                    "fileUris": [
-                        "https://raw.githubusercontent.com/stuartatmicrosoft/Ansiblefest2020/main/provision-scripts/provision-script.sh"
-                    ],
-                    "commandToExecute": "[concat(variables('customScriptCommand'),' ',variables('scriptName'),' ',parameters('azureUserName'),' ',parameters('azureUserPassword'),' ',variables('tenantId'),' ',variables('subscriptionId'),' ',parameters('applicationDisplayName'),' ',parameters('applicationSecretKey'),' ',parameters('applicationObjectId'),' ',parameters('applicationAppId'),' ',variables('scriptClose'))]"
-                }
-            }
-        }
+#        {
+#            "type": "Microsoft.Compute/virtualMachines/extensions",
+#            "name": "[concat(parameters('virtualMachineName'),'/mycustomscriptextension')]",
+#            "apiVersion": "2015-06-15",
+#            "location": "[resourceGroup().location]",
+#            "dependsOn": [
+#                "[concat('Microsoft.Compute/virtualMachines/',parameters('virtualMachineName'))]"
+#            ],
+#            "properties": {
+#                "publisher": "Microsoft.Azure.Extensions",
+#                "type": "CustomScript",
+#                "typeHandlerVersion": "2.0",
+#                "autoUpgradeMinorVersion": true,
+#                "settings": {
+#                    "fileUris": [
+#                        "https://raw.githubusercontent.com/stuartatmicrosoft/Ansiblefest2020/main/provision-scripts/provision-script.sh"
+#                    ],
+#                    "commandToExecute": "[concat(variables('customScriptCommand'),' ',variables('scriptName'),' ',parameters('azureUserName'),' ',parameters('azureUserPassword'),' ',variables('tenantId'),' ',variables('subscriptionId'),' ',parameters('applicationDisplayName'),' ',parameters('applicationSecretKey'),' ',parameters('applicationObjectId'),' ',parameters('applicationAppId'),' ',variables('scriptClose'))]"
+#                }
+#            }
+#        }
     ],
     "outputs": {
         "vncServerURL": {
