@@ -247,19 +247,26 @@
             }
         },
         {
-            "name": "[concat(parameters('virtualMachineName'),'/mycustomscriptextension')]",
-            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "config-app",
+            "type": "Extensions",
             "apiVersion": "2019-03-01",
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[concat('Microsoft.Compute/virtualMachines/',parameters('virtualMachineName'),copyindex()))]"
             ],
+            "tags": {
+               "displayName": "config-app"
+            },
             "properties": {
                 "publisher": "Microsoft.Azure.Extensions",
                 "type": "CustomScript",
                 "typeHandlerVersion": "2.1",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
+                  "skipDos2Unix": true,
+                  "timeStamp": 123456789
+                },
+                "protectedSettings": {
                     "commandToExecute": "[concat(variables('customScriptCommand'),' ',variables('scriptName'),' ',parameters('azureUserName'),' ',parameters('azureUserPassword'),' ',variables('tenantId'),' ',variables('subscriptionId'),' ',parameters('applicationDisplayName'),' ',parameters('applicationSecretKey'),' ',parameters('applicationObjectId'),' ',parameters('applicationAppId'),' ',variables('scriptClose'))]",
                     "fileUris": ["https://raw.githubusercontent.com/stuartatmicrosoft/Ansiblefest2020/main/provision-scripts/provision-script.sh"]
                 }
