@@ -42,8 +42,8 @@ echo "**************************************************************************
         yum -y group install "Server with GUI" -x file-roller* -x subscription-manager* -x dnf-plugin-subscription* -x libstoragemgmt* >> /root/yum-output.log
         echo "REMOVE" >> /root/yum-output.log
         yum -y remove rhn-check rhn-client-tools rhn-setup rhnlib rhnsd yum-rhn-plugin subscription-manager >> /root/yum-output.log
-        echo "FULL UPDATE" >> /root/yum-output.log
-        yum -y update >> /root/yum-output.log
+#        echo "FULL UPDATE" >> /root/yum-output.log
+#        yum -y update >> /root/yum-output.log
         echo "student ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
         alternatives --set python /usr/bin/python2
         cd /usr/bin
@@ -60,7 +60,7 @@ echo "**************************************************************************
 	systemctl mask firewalld
 	systemctl enable iptables
 	systemctl start iptables	
-echo "********************************************************************************************"
+echo "*************************************************************G*******************************"
         echo "`date` -- Upgrading PIP and installing Ansible" >>/root/provision-script-output.log
         runuser -l student -c "pip-2.7 install --upgrade --user python-dateutil"
         runuser -l student -c "pip-2.7 install --upgrade --user openshift"
@@ -129,9 +129,10 @@ echo "**************************************************************************
         chown student:student /home/student/.local/share/keyrings/Default.keyring
         restorecon /home/student/.local/share/keyrings/Default.keyring
 echo "********************************************************************************************"
+        echo "`date` -- Installing MongoDB and the NodeJS app locally for lab using npm" >> /root/provision-script-output.log
         wget -P /etc/yum.repos.d https://raw.githubusercontent.com/stuartatmicrosoft/Ansiblefest2020/main/provision-scripts/mongodb-org-4.2.repo 
-        yum -y install mongodb-org 
-        npm install pm2@latest -g
+        yum -y install mongodb-org >> /root/yum-output.log
+        npm install pm2@latest -g >> /root/npm.log
         systemctl enable mongod
         systemctl start mongod
         iptables -I INPUT 2 -m tcp -p tcp --dport 80 -j ACCEPT
@@ -140,7 +141,7 @@ echo "**************************************************************************
         cd /source/sample-apps/nodejs-todo/src   
         git clone https://github.com/stuartatmicrosoft/nodejs-todo .
         chown -R student:student /source
-        npm install
+        npm install >> /root/npm.log
         sed -i "s/8080/80/g" /source/sample-apps/nodejs-todo/src/server.js
         pm2 start server.js
         pm2 save
@@ -148,6 +149,7 @@ echo "**************************************************************************
         systemctl start pm2-root
         service iptables save
 echo "********************************************************************************************"
+        echo "`date` -- Installing the OpenShift 'oc' binary" >> /root/provision-script-output.log
         chown -R student:student /home/student/.local
         chmod a+rx /home/student/.local
         cd /usr/local/bin
@@ -155,9 +157,9 @@ echo "**************************************************************************
         tar xvfz oc.tar.gz
         rm -f oc.tar.gz
 echo "********************************************************************************************"
-        echo "`date` -- Installing MSSQL Tools" >>/root/provision-script-output.log
+        echo "`date` -- Installing MSSQL Tools and adding mssql to PATH" >>/root/provision-script-output.log
         curl https://packages.microsoft.com/config/rhel/8/prod.repo > /etc/yum.repos.d/msprod.repo
-        ACCEPT_EULA=Y yum install -y mssql-tools unixODBC-devel
+        ACCEPT_EULA=Y yum install -y mssql-tools unixODBC-devel >> /root/yum-output.log
         echo "PATH=$PATH:/opt/mssql-tools/bin" >> /etc/profile
 echo "********************************************************************************************"
 
@@ -177,4 +179,5 @@ echo GUIDE_URL=https://github.com/stuartatmicrosoft/Ansiblefest2020 >> /home/stu
 chown student:student /home/student/Desktop/credentials.txt
 
 echo "`date` --END-- Provision Script" >>/root/provision-script-output.log
+exit 0
 
