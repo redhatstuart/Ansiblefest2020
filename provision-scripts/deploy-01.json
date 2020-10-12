@@ -248,19 +248,15 @@
         },
         {
             "name": "[concat(parameters('virtualMachineName'),'/mycustomscriptextension')]",
-#            "type": "Microsoft.Compute/virtualMachines/extensions",
             "type": "extensions",
-#            "apiVersion": "2015-06-15",
             "apiVersion": "2019-03-01",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-#                "[concat('Microsoft.Compute/virtualMachines/',parameters('virtualMachineName'))]"
                 "[concat('Microsoft.Compute/virtualMachines/',parameters('virtualMachineName'),copyindex()))]"
             ],
             "properties": {
                 "publisher": "Microsoft.Azure.Extensions",
                 "type": "CustomScript",
-#                "typeHandlerVersion": "2.0",
                 "typeHandlerVersion": "2.1",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
