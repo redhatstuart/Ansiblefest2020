@@ -255,7 +255,7 @@
                 "[concat('Microsoft.Compute/virtualMachines/',parameters('virtualMachineName'),copyindex()))]"
             ],
             "tags": {
-               "displayName": "config-app"
+               "displayName": "[concat(parameters('virtualMachineName'),'/mycustomscriptextension')]"
             },
             "properties": {
                 "publisher": "Microsoft.Azure.Extensions",
