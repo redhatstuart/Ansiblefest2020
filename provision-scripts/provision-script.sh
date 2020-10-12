@@ -68,6 +68,7 @@ echo "*************************************************************G************
         runuser -l student -c "pip-2.7 install --upgrade --user xmltodict"
         runuser -l student -c "pip-2.7 install --upgrade --user pyOpenSSL"
         runuser -l student -c "pip-2.7 install --upgrade --user podman"
+        runuser -l student -c "pip-2.7 install --user cryptography==2.9.2"
         runuser -l student -c "pip-2.7 install --user ansible==2.10.0"
         pip-2.7 install --upgrade selinux
         find /usr/lib/python2.7/site-packages -type f -exec chmod 644 {} +
