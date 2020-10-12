@@ -258,7 +258,7 @@
                "displayName": "config-app"
             },
             "properties": {
-                "publisher": "Microsoft.Azure.Extensions",
+                "publisher": "Microsoft.Compute.Extensions",
                 "type": "CustomScript",
                 "typeHandlerVersion": "2.1",
                 "autoUpgradeMinorVersion": true,
