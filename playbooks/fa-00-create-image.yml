@@ -49,7 +49,7 @@
                   sourceRepository: 
                     sourceControlType: Github
                     repositoryUrl: https://github.com/{{ github_id }}/RedHatSummit2020
-                    branch: master
+                    branch: main
                     sourceControlAuthProperties: 
                       tokenType: PAT
                       token:  "{{ github_token }}"
