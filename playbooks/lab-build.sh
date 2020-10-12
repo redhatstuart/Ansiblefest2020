@@ -16,7 +16,7 @@ AZUREDC="$(az group list -o table |grep 01 | awk '{print $2}')"
 RG="01"
 
 # Inputs
-echo "Welcome to the Red Hat Summit 2020 lab Deploy and scale Microsoft Azure Cloud Native infrastructures and applications with Red Hat Ansible Automation"
+echo "Welcome to the Ansiblefest 2020 lab Deploy and scale Microsoft Azure Cloud Native infrastructures and applications with Red Hat Ansible Automation"
 echo "Please answer the following questions so that we can get your lab environment set up and you can begin working on your lab exercises."
 echo " "
 echo -n "What is your first name:  > "
