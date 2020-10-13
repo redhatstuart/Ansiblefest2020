@@ -24,7 +24,7 @@
         https_only: true
         tags:
           Tier: Development
-          Venue: RedHatSummit
+          Venue: Ansiblefest
       register: output
 
     - name: Obtain Azure Container Registry Facts

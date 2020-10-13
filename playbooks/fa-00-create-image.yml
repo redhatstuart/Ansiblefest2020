@@ -15,7 +15,7 @@
         sku: Premium
         tags:
             Release: Initial
-            Environment: RedHatSummit
+            Environment: Ansiblefest
            
     - name: Build Image using Azure Container Registry
       azure.azcollection.azure_rm_resource:
@@ -48,7 +48,7 @@
                 - name: mySourceTrigger
                   sourceRepository: 
                     sourceControlType: Github
-                    repositoryUrl: https://github.com/{{ github_id }}/RedHatSummit2020
+                    repositoryUrl: https://github.com/{{ github_id }}/Ansiblefest2020
                     branch: main
                     sourceControlAuthProperties: 
                       tokenType: PAT

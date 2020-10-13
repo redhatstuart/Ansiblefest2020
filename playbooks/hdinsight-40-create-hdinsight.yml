@@ -15,7 +15,7 @@
         account_type: Standard_LRS
         tags:
           Tier: Development
-          Venue: RedHatSummit
+          Venue: Ansiblefest
       register: storage_create_output
 
     - name: Getting Storage Account Keys from Azure REST API

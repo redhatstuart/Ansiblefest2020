@@ -15,7 +15,7 @@
         sku: Premium
         tags:
             Release: Initial
-            Environment: RedHatSummit
+            Environment: Ansiblefest
 
     - name: "Query Azure Container Registry for credential information"
       azure.azcollection.azure_rm_containerregistry_info:
