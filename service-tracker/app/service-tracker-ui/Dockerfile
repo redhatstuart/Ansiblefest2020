@@ -1,4 +1,4 @@
-FROM node:10.9.0-alpine
+FROM ubi8/nodejs-12
 
 WORKDIR /usr/src/app
 COPY package*.json ./
